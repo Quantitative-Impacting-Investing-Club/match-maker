@@ -21,11 +21,11 @@ struct SecurityInput
 {
 	string securityID;
 	int time_mu; // In seconds since epoch
-	int time_sig;
+	double time_sig;
 	double price_mu;
 	double price_sig;
 	int quantity_mu;
-	int quantity_sig;
+	double quantity_sig;
 	int num_orders;
 };
 

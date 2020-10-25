@@ -68,14 +68,17 @@ void  DataMock::GenerateSecData(const SecurityInput& SecInp)
 	string order_type;
 	vector<boost::variant<string, string, int, double, string, int>> order_entry;
 	struct tm* time_info;
-	string time_string;
-
+	char time_string[100];
 
 	for (int i = 0; i < SecInp.num_orders; i++)
-	{
+	{	
+		// Generate data for each entry, and continue to generate if p/q is not positive
 		t = (time_t) time_gen();
+		
 		q = quant_gen();
-		p = ((float) round(price_gen() * 100))/100;
+		do { q = quant_gen(); } while (q <= 0);
+
+		do { p = ((float)round(price_gen() * 100)) / 100; } while (p <= 0);
 
 		if (rand() % 2)
 		{
@@ -87,10 +90,12 @@ void  DataMock::GenerateSecData(const SecurityInput& SecInp)
 		}
 
 		time_info = gmtime(&t);
-		string time_string = asctime(time_info);
+		strftime(time_string, 50, "%Y-%m-%d-%H-%M-%S", time_info);
 
-		t = (int) t;
-		order_entry = { SecInp.securityID, time_string, q, p, order_type, ++OrderID};
+			// asctime(time_info);
+		// cout << to_string(time_info->tm_year) + "-" + to_string(time_info->tm_hour);
+
+		order_entry = { SecInp.securityID, (string) time_string, q, p, order_type, ++OrderID};
 		OrderCollections.push_back(order_entry);
 	}
 }
@@ -107,5 +112,17 @@ void  DataMock::PrintData() const
 // Save Data
 void DataMock::SaveData(string fp)
 {
+	ofstream myfile(fp.c_str());
+	int vsize = OrderCollections.size();
+	myfile << "SecID, Time, Quantity, Price, OrderType, OrderID" << endl;
+	for (int i= 0; i < vsize; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			myfile << OrderCollections[i][j] << ',';
+		}
+		myfile << endl;
+	}
+	myfile.close();
 }
 
