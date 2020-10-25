@@ -1,9 +1,7 @@
 #include "DataMock.hpp"
 #include <iostream>
+#include <fstream>
 
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
 
 
 // Default Constructor
@@ -106,4 +104,8 @@ void  DataMock::PrintData() const
 	}
 }
 
+// Save Data
+void DataMock::SaveData(string fp)
+{
+}
 

@@ -56,7 +56,7 @@ public:
 	void PrintData() const;
 
 	// Save as CSV/TXT
-	void Save();
+	void SaveData(string fp);
 
 };
 
