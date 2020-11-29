@@ -3,7 +3,7 @@
 
   
 
-This is the source code for an order matching system written in C++ to support trading operations for the Quantitative Impact Investment Club at the University of Toronto.
+This is the source code for an order matching system written in Python/C++ to support trading operations for the Quantitative Impact Investment Club at the University of Toronto.
 
   
 
